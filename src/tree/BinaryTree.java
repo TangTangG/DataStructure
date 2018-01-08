@@ -11,7 +11,7 @@ import java.util.Stack;
  * description:
  * Complete binary tree, not allowed null.
  * Algorithm time complexity is as follows:
- * insert:O(N+2logN) tip:if allow multi same element,can insert at O(2logN).
+ * insert:O(N)
  * remove:O(N)
  * update:O(N)
  * query :O(N)
@@ -38,28 +38,27 @@ public class BinaryTree<E> extends TreeDataModel<E> {
             size++;
             return element;
         }
-        //O(N)
-        Node<E> t;
-        if ((t = preOrder(element)) != null) {
-            t.element = element;
-            return element;
-        } else {
-            t = root;
-        }
-        //find parent
-        //O(logN)
-        int deep = deep();
-        //O(logN)
-        int lastLevelSize = size - (1 << deep) + 1;
-        while (t.right != null && t.left != null) {
-            double half = lastLevelSize / ((1 << deep) * 1.0);
-            if (half >= 0.5 & half < 1) {
-                t = t.right;
-                lastLevelSize -= (1 << (deep - 1));
-            } else {
-                t = t.left;
+        Node<E> t = root;
+        int head = 0;
+        int tail = 1;
+        int oldSize = size;
+        Node<E>[] q = new Node[oldSize];
+        q[head] = root;
+        while (head < tail) {
+            t = q[head];
+            if (oldSize != size) {
+                throw new ConcurrentModificationException("do note allow modify tree when insert.");
             }
-            deep--;
+            if (t.left == null || t.right == null) {
+                break;
+            }
+            if (element.equals(t.element)) {
+                t.element = element;
+                return element;
+            }
+            q[tail++] = t.left;
+            q[tail++] = t.right;
+            head++;
         }
         Node<E> p = t;
         Node<E> n = new Node<>(element, p);

@@ -1,9 +1,9 @@
-package model;
+package implement;
 
 /**
  * Created by CaiGao on 2017/9/29.
  */
-public class Bean {
+public class Bean implements Comparable{
     String s;
     int anInt;
 
@@ -23,5 +23,13 @@ public class Bean {
     @Override
     public String toString() {
         return "s:"+s+" i:"+anInt;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null || !(o instanceof Bean)){
+            throw new IllegalArgumentException("unexpected args(such as null or not an instance).");
+        }
+        return anInt - ((Bean)o).anInt;
     }
 }

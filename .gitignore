@@ -49,3 +49,6 @@ out/production/DataStructure/Stack.class
 *.class
 .idea/workspace.xml
 .idea/inspectionProfiles/Project_Default.xml
+.idea/workspace.xml
+.idea/modules.xml
+.idea/misc.xml

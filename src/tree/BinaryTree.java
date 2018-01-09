@@ -3,7 +3,6 @@ package tree;
 import model.TreeDataModel;
 
 import java.util.ConcurrentModificationException;
-import java.util.Stack;
 
 /**
  * @author Caigao.Tang
@@ -25,9 +24,6 @@ public class BinaryTree<E> extends TreeDataModel<E> {
      * So we can use 'deep' to traversal tree.
      */
 
-    private Node<E> root;
-    private int size = 0;
-
     @Override
     public E insert(E element) {
         if (element == null) {
@@ -42,6 +38,7 @@ public class BinaryTree<E> extends TreeDataModel<E> {
         int head = 0;
         int tail = 1;
         int oldSize = size;
+        @SuppressWarnings("unchecked")
         Node<E>[] q = new Node[oldSize];
         q[head] = root;
         while (head < tail) {
@@ -99,39 +96,11 @@ public class BinaryTree<E> extends TreeDataModel<E> {
             Node<E> c = last.copy();
             replace(last, null);
             replace(node, c);
+            release(node);
             size--;
             return true;
         }
         return false;
-    }
-
-    private void replace(Node<E> oldN, Node<E> newN) {
-        if (oldN == null) {
-            return;
-        }
-        Node p = oldN.parent;
-        Node l = oldN.left;
-        Node r = oldN.right;
-        if (newN != null) {
-            newN.parent = p;
-            newN.left = l;
-            newN.right = r;
-        }
-        if (l != null) {
-            l.parent = newN;
-        }
-        if (r != null) {
-            r.parent = newN;
-        }
-        if (p == null) {
-            root = newN;
-        } else {
-            if (oldN.equals(p.left)) {
-                p.left = newN;
-            } else {
-                p.right = newN;
-            }
-        }
     }
 
     public E update(E element) {
@@ -145,115 +114,6 @@ public class BinaryTree<E> extends TreeDataModel<E> {
     @Override
     protected boolean contain(E e) {
         return preOrder(e) != null;
-    }
-
-    public int size() {
-        return size;
-    }
-
-    private Node<E> preOrder(E e) {
-        Stack<Node<E>> l = new Stack<>();
-        Node<E> t = root;
-        Node<E> result = null;
-        while (t != null || !l.empty()) {
-            while (t != null) {
-                if (e.equals(t.element)) {
-                    result = t;
-                    break;
-                }
-                l.push(t);
-                t = t.left;
-            }
-            if (result != null) {
-                break;
-            }
-            if (!l.empty()) {
-                t = l.pop().right;
-            }
-        }
-        return t;
-    }
-
-    private Node<E> inorder(E e) {
-        Stack<Node<E>> l = new Stack<>();
-        Node<E> t = root;
-        while (t != null || !l.empty()) {
-            while (t != null) {
-                l.push(t);
-                t = t.left;
-            }
-            if (!l.empty()) {
-                t = l.pop();
-                if (e.equals(t.element)) {
-                    break;
-                }
-                t = t.right;
-            }
-        }
-        return t;
-    }
-
-    private Node<E> postOrder(E e) {
-        Node<E> t = root;
-        if (t == null) {
-            return null;
-        }
-        Stack<Node<E>> lr = new Stack<>();
-        Node<E> last = null;
-        lr.push(t);
-        while (!lr.empty()) {
-            t = lr.peek();
-            @SuppressWarnings("unchecked")
-            Node<E> l = t.left;
-            @SuppressWarnings("unchecked")
-            Node<E> r = t.right;
-            boolean access = (r == null && l == null) ||
-                    (last != null && (last.equals(r) || last.equals(l)));
-            if (access) {
-                if (e.equals(t.element)) {
-                    break;
-                }
-                lr.pop();
-                last = t;
-            } else {
-                if (l != null) {
-                    lr.push(l);
-                }
-                if (r != null) {
-                    lr.push(r);
-                }
-            }
-        }
-        return t;
-    }
-
-    private Node<E> layerOrder(E e) {
-        if (root == null) {
-            return null;
-        }
-        int head = 0;
-        int tail = 1;
-        Node<E> t = root;
-        int oldSize = size;
-        //use as a queue.
-        @SuppressWarnings("unchecked")
-        Node<E>[] q = new Node[oldSize];
-        q[0] = root;
-        while (head < tail) {
-            t = q[head];
-            if (t.element.equals(e)) {
-                break;
-            }
-            if (t.left != null) {
-                q[tail++] = t.left;
-            }
-            if (t.right != null) {
-                q[tail++] = t.right;
-            }
-            head++;
-        }
-
-        return t;
     }
 
     private Node<E> getFirst() {

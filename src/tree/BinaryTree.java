@@ -116,6 +116,22 @@ public class BinaryTree<E> extends TreeDataModel<E> {
         return preOrder(e) != null;
     }
 
+    /**
+     * @return E first element in this complete tree.
+     */
+    public E first() {
+        Node<E> first = getFirst();
+        return first == null ? null : first.element;
+    }
+
+    /**
+     * @return E last element in this complete tree.
+     */
+    public E last() {
+        Node<E> last = getLast();
+        return last == null ? null : last.element;
+    }
+
     private Node<E> getFirst() {
         return root;
     }
@@ -140,42 +156,5 @@ public class BinaryTree<E> extends TreeDataModel<E> {
         }
         last = t;
         return last;
-    }
-
-    @Override
-    public String toString() {
-        if (root == null) {
-            return "empty";
-        }
-        int curD = 0;
-        StringBuilder s = new StringBuilder();
-        int head = 0;
-        int tail = 1;
-        Node<E> t;
-        int oldSize = size;
-        @SuppressWarnings("unchecked")
-        Node<E>[] q = new Node[oldSize];
-        q[head] = root;
-        while (head < tail) {
-            if (oldSize != size) {
-                throw new ConcurrentModificationException("do not allow modify data when toString()");
-            }
-            t = q[head];
-            int deepSize = (1 << (curD + 1)) - 1;
-            if (head == deepSize) {
-                curD++;
-                s.append("\n");
-            }
-            s.append(" [").append(t.toString()).append("] ");
-
-            if (t.left != null) {
-                q[tail++] = t.left;
-            }
-            if (t.right != null) {
-                q[tail++] = t.right;
-            }
-            head++;
-        }
-        return s.toString();
     }
 }

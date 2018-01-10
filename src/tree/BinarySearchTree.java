@@ -20,6 +20,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
         this.comparator = c;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public E insert(E element) {
         if (element == null) {
@@ -87,6 +88,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     private void deleteNode(Node<E> n) {
         //In fact, there are four situations here:
         //1.has two child
@@ -110,7 +112,6 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
             n = s;
         }
 
-        @SuppressWarnings("unchecked")
         Node<E> replacement = n.left != null ? n.left : n.right;
 
         if (replacement != null) {
@@ -138,6 +139,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
         release(n);
     }
 
+    @SuppressWarnings("unchecked")
     public E max() {
         if (root == null) {
             return null;
@@ -149,6 +151,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
         return t.element;
     }
 
+    @SuppressWarnings("unchecked")
     public E min() {
         if (root == null) {
             return null;
@@ -165,6 +168,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
         return (comparator != null ? findUseComparator(e) : find(e)) != null;
     }
 
+    @SuppressWarnings("unchecked")
     private Node<E> findUseComparator(E e) {
         if (comparator == null) {
             throw new NullPointerException("findUseComparator at comparator is null.");
@@ -187,11 +191,11 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
         return target;
     }
 
+    @SuppressWarnings("unchecked")
     private Node<E> find(E e) {
         Node<E> target = null;
         Node<E> t = root;
         int i;
-        @SuppressWarnings("unchecked")
         Comparable<E> c = (Comparable<E>) e;
         do {
             i = c.compareTo(t.element);

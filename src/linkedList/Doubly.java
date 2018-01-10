@@ -7,7 +7,7 @@ import java.util.ConcurrentModificationException;
 /**
  * @author Caigao.Tang
  * @date 2017/9/30.
- * description：
+ * description:
  * thread safe doubly linked list.
  * do not support multi operation at same time.
  */

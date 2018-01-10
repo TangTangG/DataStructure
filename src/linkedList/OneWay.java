@@ -5,12 +5,12 @@ import model.LinkDataModel;
 /**
  * @author Caigao.Tang
  * @date  2017/9/22.
- * description：
+ * description:
  */
 public class OneWay<E> extends LinkDataModel<E> {
 
-    protected OneWayNode last;
-    protected OneWayNode first;
+    private OneWayNode last;
+    private OneWayNode first;
 
     @Override
     public synchronized E insert(E e) {

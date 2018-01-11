@@ -23,6 +23,11 @@ interface DataModel<E> {
      */
     boolean remove(E element);
 
+    /**
+     * clear all data in this model.
+     */
+    void clear();
+
     interface Consumer<E> {
         /**
          * Node traverse interface

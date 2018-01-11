@@ -148,6 +148,14 @@ public class Heap<E> extends HeapDataModel<E> {
         return true;
     }
 
+    @Override
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            heap[i] = null;
+        }
+        size = 0;
+    }
+
     @SuppressWarnings("unchecked")
     private void removeAt(int idx) {
         int i = --size;

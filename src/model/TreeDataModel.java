@@ -151,6 +151,12 @@ public abstract class TreeDataModel<E> implements DataModel<E> {
         return size;
     }
 
+    @Override
+    public void clear() {
+        size = 0;
+        root = null;
+    }
+
     protected boolean contain(E e) {
         return false;
     }

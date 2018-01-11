@@ -151,6 +151,20 @@ public class Doubly<E> extends LinkDataModel<E> {
     }
 
     @Override
+    public void clear() {
+        int respectModify = modify;
+        DoublyNode n = first;
+        while (n != null) {
+            modifyCheck(respectModify);
+            DoublyNode next = n.next;
+            n.element = n.next = n.prev = null;
+            n = next;
+        }
+        ++modify;
+        size = 0;
+    }
+
+    @Override
     public E childAt(int index) {
         DoublyNode nodeAt = nodeAt(index);
         return nodeAt == null ? null : (E) nodeAt.element;
@@ -186,7 +200,7 @@ public class Doubly<E> extends LinkDataModel<E> {
         return null;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 

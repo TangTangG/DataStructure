@@ -4,7 +4,7 @@ import model.LinkDataModel;
 
 /**
  * @author Caigao.Tang
- * @date  2017/9/22.
+ * @date 2017/9/22.
  * description:
  */
 public class OneWay<E> extends LinkDataModel<E> {
@@ -15,7 +15,7 @@ public class OneWay<E> extends LinkDataModel<E> {
     @Override
     public synchronized E insert(E e) {
         OneWayNode<E> newNode = new OneWayNode<>(e, null);
-        if (first == null){
+        if (first == null) {
             first = newNode;
         }
         if (last != null) {
@@ -110,7 +110,17 @@ public class OneWay<E> extends LinkDataModel<E> {
         return null;
     }
 
-    public synchronized OneWay reverse(){
+    @Override
+    public void clear() {
+        OneWayNode n = first;
+        while (n != null) {
+            OneWayNode next = n.next;
+            n.element = n.next = null;
+            n = next;
+        }
+    }
+
+    public synchronized OneWay reverse() {
         OneWayNode oldLast = last;
         last = first;
         reverseNode(first);
@@ -118,8 +128,8 @@ public class OneWay<E> extends LinkDataModel<E> {
         return this;
     }
 
-    private void reverseNode(OneWayNode head){
-        if (head == null || head.next == null){
+    private void reverseNode(OneWayNode head) {
+        if (head == null || head.next == null) {
             return;
         }
         reverseNode(head.next);
@@ -127,17 +137,17 @@ public class OneWay<E> extends LinkDataModel<E> {
         head.next = null;
     }
 
-    public E getFirst(){
+    public E getFirst() {
         return first != null ? (E) first.element : null;
     }
 
-    public E getLast(){
+    public E getLast() {
         return last != null ? (E) last.element : null;
     }
 
     @Override
     public void foreach(Consumer<? super E> consumer) {
-        if (consumer == null){
+        if (consumer == null) {
             return;
         }
         int index = 0;

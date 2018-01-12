@@ -3,6 +3,7 @@ package testCase;
 import implement.BinarySearchTreeTest;
 import implement.BinaryTreeTest;
 import implement.HeapTest;
+import implement.QueueTest;
 
 /**
  * @author Caigao.Tang
@@ -16,6 +17,7 @@ public class Main {
 //        testCase = new OneWayTest();
 //        testCase = new BinaryTreeTest();
 //        testCase = new BinarySearchTreeTest();
+//        testCase = new QueueTest();
 //        testCase = new HeapTest();
         if (testCase != null) {
             testCase.test();

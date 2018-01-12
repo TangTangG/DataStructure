@@ -3,6 +3,8 @@ Data structures implemented in **Java**.<br>
 You can use this project to build a simple data structure implement in your Java project.<br>
 Tip:**All implementations do not support thread safety**.
 ## Achieved the following data structure
+### Queue
+  * [(Array)Queue](./src/queue/Queue.java)
 ### Heap
   * [(Balanced binary)Heap](./src/heap/Heap.java)
 ### LinkedList

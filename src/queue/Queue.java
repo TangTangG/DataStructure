@@ -114,14 +114,6 @@ public class Queue<E> extends QueueDataModel<E> {
         return false;
     }
 
-    @Override
-    public void clear() {
-        for (int i = head; i < tail; i++) {
-            queue[i] = null;
-        }
-        head = tail = 0;
-    }
-
     private boolean delete(int i) {
         if (i == head) {
             poll();
@@ -147,6 +139,18 @@ public class Queue<E> extends QueueDataModel<E> {
             tail = t - 1;
         }
         return true;
+    }
+
+    public int size() {
+        return tail - head;
+    }
+
+    @Override
+    public void clear() {
+        for (int i = head; i < tail; i++) {
+            queue[i] = null;
+        }
+        head = tail = 0;
     }
 
     @Override

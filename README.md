@@ -3,6 +3,8 @@ Data structures implemented in **Java**.<br>
 You can use this project to build a simple data structure implement in your Java project.<br>
 Tip:**All implementations do not support thread safety**.
 ## Achieved the following data structure
+### Stack
+  * [(Array)Stack](./src/stack/Stack.java)
 ### Queue
   * [(Array)Queue](./src/queue/Queue.java)
 ### Heap
@@ -13,7 +15,7 @@ Tip:**All implementations do not support thread safety**.
 ### Tree
   * [(Complete)Binary tree](./src/tree/BinarySearchTree.java)
   * [Binary search tree](./src/tree/BinaryTree.java)
-## Goal
+## Goals
 >Contains most commonly used data structures.<br>
 >Such as Stack,LinkedList,Heap and so on.
 ## Contact

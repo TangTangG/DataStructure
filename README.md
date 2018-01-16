@@ -15,6 +15,7 @@ Tip:**All implementations do not support thread safety**.
 ### Tree
   * [(Complete)Binary tree](./src/tree/BinarySearchTree.java)
   * [Binary search tree](./src/tree/BinaryTree.java)
+  * [AVLTree](./src/tree/AVLTree.java)
 ## Goals
 >Contains most commonly used data structures.<br>
 >Such as Stack,LinkedList,Heap and so on.

@@ -24,13 +24,14 @@ public class BinaryTree<E> extends TreeDataModel<E> {
      * So we can use 'deep' to traversal tree.
      */
 
+    @SuppressWarnings("unchecked")
     @Override
     public E insert(E element) {
         if (element == null) {
             return null;
         }
         if (root == null) {
-            root = new Node<>(element, null);
+            root = builder.build(element,null);
             size++;
             return element;
         }
@@ -38,7 +39,6 @@ public class BinaryTree<E> extends TreeDataModel<E> {
         int head = 0;
         int tail = 1;
         int oldSize = size;
-        @SuppressWarnings("unchecked")
         Node<E>[] q = new Node[oldSize];
         q[head] = root;
         while (head < tail) {
@@ -58,7 +58,7 @@ public class BinaryTree<E> extends TreeDataModel<E> {
             head++;
         }
         Node<E> p = t;
-        Node<E> n = new Node<>(element, p);
+        Node<E> n = builder.build(element,p);
         if (p.left == null) {
             p.left = n;
         } else {
@@ -136,6 +136,7 @@ public class BinaryTree<E> extends TreeDataModel<E> {
         return root;
     }
 
+    @SuppressWarnings("unchecked")
     private Node<E> getLast() {
         Node<E> t = root;
         if (t == null) {

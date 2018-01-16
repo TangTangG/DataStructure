@@ -8,10 +8,14 @@ import java.util.Comparator;
  * @author Caigao.Tang
  * @date 2018/1/8.
  * description:
+ * An binary search tree.
+ * <p>
+ * Saved data should implement  interface Comparable<T>.java
+ * or give Comparator<T>.java when initial this cls.
  */
 public class BinarySearchTree<E> extends TreeDataModel<E> {
 
-    private Comparator<E> comparator = null;
+    Comparator<E> comparator = null;
 
     public BinarySearchTree() {
     }
@@ -20,17 +24,23 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
         this.comparator = c;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public E insert(E element) {
         if (element == null) {
             return null;
         }
+        Node<E> node = add(element);
+        size++;
+        return node.element;
+    }
+
+    @SuppressWarnings("unchecked")
+    Node<E> add(E element) {
         Node<E> t = root;
         if (t == null) {
-            root = new Node<>(element, null);
+            root = builder.build(element, null);
             size++;
-            return element;
+            return root;
         }
         Node<E> p;
         int i;
@@ -42,7 +52,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
                     t = t.right;
                 } else if (i == 0) {
                     t.element = element;
-                    return element;
+                    return t;
                 } else {
                     t = t.left;
                 }
@@ -58,21 +68,20 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
                     t = t.right;
                 } else if (i == 0) {
                     t.element = element;
-                    return element;
+                    return t;
                 } else {
                     t = t.left;
                 }
 
             } while (t != null);
         }
-        Node<E> node = new Node<>(element, p);
+        Node<E> node = builder.build(element, p);
         if (i > 0) {
             p.right = node;
         } else {
             p.left = node;
         }
-        size++;
-        return element;
+        return node;
     }
 
     @Override
@@ -89,7 +98,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
     }
 
     @SuppressWarnings("unchecked")
-    private void deleteNode(Node<E> n) {
+    Node<E> deleteNode(Node<E> n) {
         //In fact, there are four situations here:
         //1.has two child
         //2.only has left child
@@ -114,29 +123,31 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
 
         Node<E> replacement = n.left != null ? n.left : n.right;
 
+        Node p = n.parent;
         if (replacement != null) {
-            replacement.parent = n.parent;
-            if (n.parent == null) {
+            replacement.parent = p;
+            if (p == null) {
                 //left or right child must be null(only one branch).
                 root = replacement;
-            } else if (replacement.equals(n.parent.left)) {
-                n.parent.left = replacement;
+            } else if (replacement.equals(p.left)) {
+                p.left = replacement;
             } else {
-                n.parent.right = replacement;
+                p.right = replacement;
             }
-        } else if (n.parent == null) {
+        } else if (p == null) {
             root = null;
         } else {
             //no child
             //n.parent must not null
-            if (n.equals(n.parent.left)) {
-                n.parent.left = null;
+            if (n.equals(p.left)) {
+                p.left = null;
             } else {
-                n.parent.right = null;
+                p.right = null;
             }
             n.parent = null;
         }
         release(n);
+        return p;
     }
 
     @SuppressWarnings("unchecked")
@@ -169,7 +180,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
     }
 
     @SuppressWarnings("unchecked")
-    private Node<E> findUseComparator(E e) {
+    protected Node<E> findUseComparator(E e) {
         if (comparator == null) {
             throw new NullPointerException("findUseComparator at comparator is null.");
         }
@@ -192,7 +203,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
     }
 
     @SuppressWarnings("unchecked")
-    private Node<E> find(E e) {
+    protected Node<E> find(E e) {
         Node<E> target = null;
         Node<E> t = root;
         int i;

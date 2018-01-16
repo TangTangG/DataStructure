@@ -12,6 +12,7 @@ public abstract class TreeDataModel<E> implements DataModel<E> {
 
     protected Node<E> root;
     protected int size = 0;
+    protected NodeBuilder<E> builder = new DefaultNodeBuilder<>();
 
     protected void replace(Node<E> oldN, Node<E> newN) {
         if (oldN == null) {
@@ -42,6 +43,7 @@ public abstract class TreeDataModel<E> implements DataModel<E> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected Node<E> preOrder(E e) {
         Stack<Node<E>> l = new Stack<>();
         Node<E> t = root;
@@ -65,6 +67,7 @@ public abstract class TreeDataModel<E> implements DataModel<E> {
         return t;
     }
 
+    @SuppressWarnings("unchecked")
     protected Node<E> inorder(E e) {
         Stack<Node<E>> l = new Stack<>();
         Node<E> t = root;
@@ -161,6 +164,7 @@ public abstract class TreeDataModel<E> implements DataModel<E> {
         return false;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public String toString() {
         if (root == null) {
@@ -172,7 +176,6 @@ public abstract class TreeDataModel<E> implements DataModel<E> {
         int tail = 1;
         Node<E> t;
         int oldSize = size;
-        @SuppressWarnings("unchecked")
         Node<E>[] q = new Node[oldSize];
         q[head] = root;
         while (head < tail) {
@@ -221,20 +224,58 @@ public abstract class TreeDataModel<E> implements DataModel<E> {
             this.right = r;
         }
 
-        public Node(E e, Node p) {
-            this.element = e;
-            this.parent = p;
-            this.left = null;
-            this.right = null;
-        }
-
         public Node<E> copy() {
             return new Node<E>(element, parent, left, right);
         }
 
         @Override
         public String toString() {
-            return element != null ? element.toString(): "null";
+            return element != null ? element.toString() : "null";
         }
+    }
+
+    protected static class DefaultNodeBuilder<E> implements NodeBuilder<E> {
+
+        @Override
+        public Node<E> build(E e, Node p, Node l, Node r) {
+            if (e == null) {
+                return null;
+            }
+            return new Node<>(e, p, l, r);
+        }
+
+        @Override
+        public Node<E> build(E e, Node p) {
+            return build(e, p, null, null);
+        }
+    }
+
+    /**
+     * Node builder
+     *
+     * @author Caigao.Tang
+     * @date 2018/1/16
+     */
+    protected interface NodeBuilder<E> {
+
+        /**
+         * Build with child.
+         *
+         * @param e Node element val
+         * @param l Node`s left child
+         * @param p Node`s parent
+         * @param r Node`s right child
+         * @return the node build,return null when param invalid
+         */
+        Node<E> build(E e, Node p, Node l, Node r);
+
+        /**
+         * Build with no child.
+         *
+         * @param e Node element val
+         * @param p Node`s parent
+         * @return the node build,return null when param invalid
+         */
+        Node<E> build(E e, Node p);
     }
 }

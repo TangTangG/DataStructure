@@ -1,5 +1,6 @@
 package testCase;
 
+import implement.AVLTreeTest;
 import implement.BinarySearchTreeTest;
 import implement.BinaryTreeTest;
 import implement.HeapTest;
@@ -21,14 +22,9 @@ public class Main {
 //        testCase = new QueueTest();
 //        testCase = new HeapTest();
 //        testCase = new StackTest();
+ //       testCase = new AVLTreeTest();
         if (testCase != null) {
             testCase.test();
         }
-
     }
-
-    private static void treeTest() {
-
-    }
-
 }

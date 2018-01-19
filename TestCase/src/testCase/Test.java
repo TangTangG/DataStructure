@@ -17,4 +17,3 @@ import java.lang.annotation.Target;
 public @interface Test {
     boolean enable() default false;
 }
-s

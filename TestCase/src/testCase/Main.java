@@ -4,8 +4,12 @@ import implement.AVLTreeTest;
 import implement.BinarySearchTreeTest;
 import implement.BinaryTreeTest;
 import implement.HeapTest;
+import implement.OneWayTest;
 import implement.QueueTest;
 import implement.StackTest;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @author Caigao.Tang
@@ -14,17 +18,50 @@ import implement.StackTest;
  */
 public class Main {
 
-    public static void main(String[] args) {
-        testCase.TestIface testCase = null;
-//        testCase = new OneWayTest();
-//        testCase = new BinaryTreeTest();
-//        testCase = new BinarySearchTreeTest();
-//        testCase = new QueueTest();
-//        testCase = new HeapTest();
-//        testCase = new StackTest();
- //       testCase = new AVLTreeTest();
-        if (testCase != null) {
-            testCase.test();
+    private final static class DoTest {
+
+        private static Class<?>[] testCls = new Class[]{
+                HeapTest.class,
+                StackTest.class,
+                QueueTest.class,
+                OneWayTest.class,
+                AVLTreeTest.class,
+                BinaryTreeTest.class,
+                BinaryTreeTest.class,
+                BinarySearchTreeTest.class
+        };
+
+        void begin() {
+            for (Class<?> cls : testCls) {
+                Method test = getMethod(cls);
+                if (test != null) {
+                    try {
+                        test.invoke(cls.newInstance());
+                    } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
+                        System.out.println("do test on error");
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
+
+        private Method getMethod(Class<?> cls) {
+            Method[] methods = cls.getMethods();
+            if (methods == null || methods.length <= 0) {
+                return null;
+            }
+            for (Method method : methods) {
+                Test a = method.getAnnotation(Test.class);
+                if (a != null && a.enable()) {
+                    method.setAccessible(true);
+                    return method;
+                }
+            }
+            return null;
+        }
+    }
+
+    public static void main(String[] args) {
+        new DoTest().begin();
     }
 }

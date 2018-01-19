@@ -1,6 +1,6 @@
 package implement;
 
-import testCase.TestIface;
+import testCase.Test;
 import tree.BinarySearchTree;
 
 /**
@@ -8,9 +8,9 @@ import tree.BinarySearchTree;
  * @date 2018/1/9.
  * description:
  */
-public class BinarySearchTreeTest extends BinarySearchTree<Bean> implements TestIface {
+public class BinarySearchTreeTest extends BinarySearchTree<Bean> {
 
-    @Override
+    @Test
     public void test() {
         BinarySearchTreeTest tree = new BinarySearchTreeTest();
         int axis = 3;
@@ -18,7 +18,7 @@ public class BinarySearchTreeTest extends BinarySearchTree<Bean> implements Test
         for (int i = 0; i < 10; i++) {
             Bean element = new Bean(String.valueOf(i), i);
             if (i == axis) {
-                element = new Bean(String.valueOf(100),i);
+                element = new Bean(String.valueOf(100), i);
             }
             tree.insert(element);
         }

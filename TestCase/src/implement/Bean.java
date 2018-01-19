@@ -3,7 +3,7 @@ package implement;
 /**
  * Created by CaiGao on 2017/9/29.
  */
-public class Bean implements Comparable{
+public final class Bean implements Comparable{
     String s;
     int anInt;
 
@@ -18,6 +18,10 @@ public class Bean implements Comparable{
             return false;
         }
         return anInt == ((Bean)obj).anInt;
+    }
+
+    public Bean copy(){
+        return new Bean(s,anInt);
     }
 
     @Override

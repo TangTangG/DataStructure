@@ -1,17 +1,16 @@
 package implement;
 
-import testCase.TestIface;
+import testCase.Test;
 import tree.AVLTree;
 
 /**
- *
  * @author Caigao.Tang
  * @date 2018/1/16
  * description:
  */
-public class AVLTreeTest extends AVLTree<Bean> implements TestIface{
+public class AVLTreeTest extends AVLTree<Bean> {
 
-    @Override
+    @Test
     public void test() {
         AVLTreeTest test = new AVLTreeTest();
         int[] vals = new int[]{62,16,71,3,50,70,77,94};

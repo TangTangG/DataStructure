@@ -52,3 +52,5 @@ out/production/DataStructure/Stack.class
 .idea/workspace.xml
 .idea/modules.xml
 .idea/misc.xml
+*.xml
+*.iml

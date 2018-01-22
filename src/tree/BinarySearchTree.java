@@ -129,7 +129,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
             if (p == null) {
                 //left or right child must be null(only one branch).
                 root = replacement;
-            } else if (replacement.equals(p.left)) {
+            } else if (n.equals(p.left)) {
                 p.left = replacement;
             } else {
                 p.right = replacement;

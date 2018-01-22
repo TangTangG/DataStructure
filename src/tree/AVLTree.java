@@ -38,7 +38,6 @@ public class AVLTree<E> extends BinarySearchTree<E> {
             return null;
         }
         AvlNode<E> node = (AvlNode<E>) add(element);
-        size++;
         node = (AvlNode<E>) node.parent;
         while (node != null) {
             int old = node.h;
@@ -122,64 +121,6 @@ public class AVLTree<E> extends BinarySearchTree<E> {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private void rotateLeft(Node node) {
-        if (node == null) {
-            return;
-        }
-        Node p = node.parent;
-        Node r = node.right;
-        //1.link right-left to node right
-        Node rL = r.left;
-        node.right = rL;
-        if (rL != null) {
-            rL.parent = node;
-        }
-        //2.link node as left child of right.
-        node.parent = r;
-        r.left = node;
-        //3.link to parent
-        r.parent = p;
-        if (p == null) {
-            root = r;
-            return;
-        }
-        if (node.equals(p.right)) {
-            p.right = r;
-        } else {
-            p.left = r;
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void rotateRight(Node node) {
-        if (node == null) {
-            return;
-        }
-        Node p = node.parent;
-        Node l = node.left;
-        //1.link left-right child to node.
-        Node lR = l.right;
-        node.left = lR;
-        if (lR != null) {
-            lR.parent = node;
-        }
-        //2.link node to left as right child.
-        node.parent = l;
-        l.right = node;
-        //3.link to parent
-        l.parent = p;
-        if (p == null) {
-            root = l;
-            return;
-        }
-        if (node.equals(p.right)) {
-            p.right = l;
-        } else {
-            p.left = l;
-        }
-    }
-
     private static class AvlNode<E> extends Node<E> {
 
         int h = 1;
@@ -200,6 +141,15 @@ public class AVLTree<E> extends BinarySearchTree<E> {
             int rH = right != null ? ((AvlNode<E>) right).h : 0;
             int lH = left != null ? ((AvlNode<E>) left).h : 0;
             return rH - lH;
+        }
+
+        @Override
+        public String toString() {
+            return "{h:" +
+                    h +
+                    "  [" +
+                    super.toString() +
+                    "]}";
         }
     }
 

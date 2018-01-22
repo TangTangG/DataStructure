@@ -29,9 +29,8 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
         if (element == null) {
             return null;
         }
-        Node<E> node = add(element);
-        size++;
-        return node.element;
+        add(element);
+        return element;
     }
 
     @SuppressWarnings("unchecked")
@@ -81,6 +80,7 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
         } else {
             p.left = node;
         }
+        size++;
         return node;
     }
 
@@ -148,6 +148,64 @@ public class BinarySearchTree<E> extends TreeDataModel<E> {
         }
         release(n);
         return p;
+    }
+
+    @SuppressWarnings("unchecked")
+    void rotateLeft(Node node) {
+        if (node == null) {
+            return;
+        }
+        Node p = node.parent;
+        Node r = node.right;
+        //1.link right-left to node right
+        Node rL = r.left;
+        node.right = rL;
+        if (rL != null) {
+            rL.parent = node;
+        }
+        //2.link node as left child of right.
+        node.parent = r;
+        r.left = node;
+        //3.link to parent
+        r.parent = p;
+        if (p == null) {
+            root = r;
+            return;
+        }
+        if (node.equals(p.right)) {
+            p.right = r;
+        } else {
+            p.left = r;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    void rotateRight(Node node) {
+        if (node == null) {
+            return;
+        }
+        Node p = node.parent;
+        Node l = node.left;
+        //1.link left-right child to node.
+        Node lR = l.right;
+        node.left = lR;
+        if (lR != null) {
+            lR.parent = node;
+        }
+        //2.link node to left as right child.
+        node.parent = l;
+        l.right = node;
+        //3.link to parent
+        l.parent = p;
+        if (p == null) {
+            root = l;
+            return;
+        }
+        if (node.equals(p.right)) {
+            p.right = l;
+        } else {
+            p.left = l;
+        }
     }
 
     @SuppressWarnings("unchecked")

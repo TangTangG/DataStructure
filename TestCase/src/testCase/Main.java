@@ -6,6 +6,7 @@ import implement.BinaryTreeTest;
 import implement.HeapTest;
 import implement.OneWayTest;
 import implement.QueueTest;
+import implement.RedBlackTreeTest;
 import implement.StackTest;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,7 +28,7 @@ public class Main {
                 OneWayTest.class,
                 AVLTreeTest.class,
                 BinaryTreeTest.class,
-                BinaryTreeTest.class,
+                RedBlackTreeTest.class,
                 BinarySearchTreeTest.class
         };
 

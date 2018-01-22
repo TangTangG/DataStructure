@@ -176,6 +176,24 @@ public abstract class TreeDataModel<E> implements DataModel<E> {
         int tail = 1;
         Node<E> t;
         int oldSize = size;
+        String test = root.toString();
+        final int length = test.length();
+        int cursor = 0;
+        class Nil extends Node<E> {
+
+            private Nil() {
+                super(null, null, null, null);
+            }
+
+            @Override
+            public String toString() {
+                StringBuilder b = new StringBuilder();
+                for (int i = 0; i < length; i++) {
+                    b.append(" ");
+                }
+                return "";
+            }
+        }
         Node<E>[] q = new Node[oldSize];
         q[head] = root;
         while (head < tail) {
@@ -189,11 +207,30 @@ public abstract class TreeDataModel<E> implements DataModel<E> {
                 s.append("\n");
             }
             s.append(" [").append(t.toString()).append("] ");
-
-            if (t.left != null) {
+            if (t.element != null) {
+                cursor++;
+            }
+            if (cursor == oldSize) {
+                break;
+            }
+            //if cur tail will move to length
+            if (tail + 2 > q.length) {
+                int intent = (1 << (curD + 2)) - 1;
+                if (intent < 0) {
+                    throw new IndexOutOfBoundsException("target tree is too deep,can not print it");
+                }
+                Node<E>[] n = new Node[intent];
+                System.arraycopy(q, 0, n, 0, tail);
+                q = n;
+            }
+            if (t.left == null) {
+                q[tail++] = new Nil();
+            } else {
                 q[tail++] = t.left;
             }
-            if (t.right != null) {
+            if (t.right == null) {
+                q[tail++] = new Nil();
+            } else {
                 q[tail++] = t.right;
             }
             head++;
@@ -204,9 +241,7 @@ public abstract class TreeDataModel<E> implements DataModel<E> {
     protected void release(Node<E> node) {
         if (node != null) {
             node.element = null;
-            node.left = null;
-            node.right = null;
-            node.parent = null;
+            node.left = node.right = node.parent = null;
         }
     }
 

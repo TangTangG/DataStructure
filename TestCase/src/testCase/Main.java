@@ -1,5 +1,6 @@
 package testCase;
 
+import t.DoTest;
 import implement.AVLTreeTest;
 import implement.BinarySearchTreeTest;
 import implement.BinaryTreeTest;
@@ -9,9 +10,6 @@ import implement.QueueTest;
 import implement.RedBlackTreeTest;
 import implement.StackTest;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 /**
  * @author Caigao.Tang
  * @date 2017/9/22.
@@ -19,9 +17,9 @@ import java.lang.reflect.Method;
  */
 public class Main {
 
-    private final static class DoTest {
-
-        private static Class<?>[] testCls = new Class[]{
+    public static void main(String[] args) {
+        DoTest test = new DoTest();
+        test.initCls(
                 HeapTest.class,
                 StackTest.class,
                 QueueTest.class,
@@ -29,40 +27,7 @@ public class Main {
                 AVLTreeTest.class,
                 BinaryTreeTest.class,
                 RedBlackTreeTest.class,
-                BinarySearchTreeTest.class
-        };
-
-        void begin() {
-            for (Class<?> cls : testCls) {
-                Method test = getMethod(cls);
-                if (test != null) {
-                    try {
-                        test.invoke(cls.newInstance());
-                    } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-                        System.out.println("do test on error");
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        private Method getMethod(Class<?> cls) {
-            Method[] methods = cls.getMethods();
-            if (methods == null || methods.length <= 0) {
-                return null;
-            }
-            for (Method method : methods) {
-                Test a = method.getAnnotation(Test.class);
-                if (a != null && a.enable()) {
-                    method.setAccessible(true);
-                    return method;
-                }
-            }
-            return null;
-        }
-    }
-
-    public static void main(String[] args) {
-        new DoTest().begin();
+                BinarySearchTreeTest.class);
+        test.begin();
     }
 }

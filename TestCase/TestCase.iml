@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="DataStructure" exported="" />
+    <orderEntry type="module" module-name="UinitTest" exported="true" />
   </component>
 </module>

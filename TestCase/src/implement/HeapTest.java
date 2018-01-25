@@ -1,7 +1,7 @@
 package implement;
 
+import t.Test;
 import heap.Heap;
-import testCase.Test;
 
 /**
  * @author Caigao.Tang

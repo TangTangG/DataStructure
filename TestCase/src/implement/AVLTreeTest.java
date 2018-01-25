@@ -1,6 +1,7 @@
 package implement;
 
-import testCase.Test;
+import t.AnalysisTime;
+import t.Test;
 import tree.AVLTree;
 
 /**
@@ -10,8 +11,9 @@ import tree.AVLTree;
  */
 public class AVLTreeTest extends AVLTree<Bean> {
 
-    @Test
-    public void test() {
+    @AnalysisTime
+    @Test(enable = true)
+    private void test() {
         AVLTreeTest test = new AVLTreeTest();
         int[] vals = new int[]{62,16,71,3,50,70,77,94};
         for (int i: vals) {

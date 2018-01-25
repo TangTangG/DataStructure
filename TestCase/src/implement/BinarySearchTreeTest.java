@@ -1,6 +1,6 @@
 package implement;
 
-import testCase.Test;
+import t.Test;
 import tree.BinarySearchTree;
 
 /**

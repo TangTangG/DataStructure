@@ -12,7 +12,7 @@ import tree.AVLTree;
 public class AVLTreeTest extends AVLTree<Bean> {
 
     @AnalysisTime
-    @Test(enable = true)
+    @Test
     private void test() {
         AVLTreeTest test = new AVLTreeTest();
         int[] vals = new int[]{62,16,71,3,50,70,77,94};

@@ -2,6 +2,8 @@ package t;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,7 +15,7 @@ import java.util.TreeSet;
  */
 public class DoTest {
 
-    private static Class<?>[] testCls = new Class[]{};
+    private Class<?>[] testCls = new Class[]{};
 
     public void initCls(Class<?>... cls) {
         int i = cls.length;
@@ -23,11 +25,11 @@ public class DoTest {
 
     public void begin() {
         class TimeInfo implements Comparable {
-            private String clsName;
+            private String tag;
             private long timeNS;
 
-            private TimeInfo(String clsName, long timeNS) {
-                this.clsName = clsName;
+            private TimeInfo(String tag, long timeNS) {
+                this.tag = tag;
                 this.timeNS = timeNS;
             }
 
@@ -45,7 +47,7 @@ public class DoTest {
             public String toString() {
                 long timeMS = timeNS / 1000000;
                 long timeS = timeNS / 1000000000;
-                return "____________________" + clsName + "____________________ The test time-consuming:\\\n"
+                return "____________________" + tag + "____________________ The test time-consuming:\\\n"
                         + timeNS + "ns | " + timeMS + "ms | " + timeS + "s";
             }
 
@@ -61,27 +63,39 @@ public class DoTest {
         }
         Set<TimeInfo> timeHolder = new TreeSet<>();
         for (Class<?> cls : testCls) {
-            Method test = getMethod(cls);
-            if (test != null) {
-                AnalysisTime a = test.getAnnotation(AnalysisTime.class);
-                long beginTime = 0L;
-                long endTime = 0L;
-                try {
-                    beginTime = System.nanoTime();
-                    test.invoke(cls.newInstance());
-                    endTime = System.nanoTime();
-                } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-                    endTime = System.nanoTime();
-                    System.out.println("do test on error");
-                    e.printStackTrace();
-                } finally {
-                    if (a != null) {
-                        long timeNS = endTime - beginTime;
-                        TimeInfo info = new TimeInfo(cls.getSimpleName(), timeNS);
-                        if (a.compare()) {
-                            timeHolder.add(info);
-                        } else {
-                            System.out.println(info.toString());
+            List<Method> list = getMethod(cls);
+            Object instance = null;
+            try {
+                instance = cls.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            if (instance == null) {
+                continue;
+            }
+            for (Method test : list) {
+                if (test != null) {
+                    AnalysisTime a = test.getAnnotation(AnalysisTime.class);
+                    long beginTime = 0L;
+                    long endTime = 0L;
+                    try {
+                        beginTime = System.nanoTime();
+                        test.invoke(instance);
+                        endTime = System.nanoTime();
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        endTime = System.nanoTime();
+                        System.out.println("do test on error");
+                        e.printStackTrace();
+                    } finally {
+                        if (a != null) {
+                            long timeNS = endTime - beginTime;
+                            TimeInfo info = new TimeInfo(cls.getSimpleName() +
+                                    " [" + test.getName() + "]", timeNS);
+                            if (a.compare()) {
+                                timeHolder.add(info);
+                            } else {
+                                System.out.println(info.toString());
+                            }
                         }
                     }
                 }
@@ -93,18 +107,19 @@ public class DoTest {
     }
 
 
-    private Method getMethod(Class<?> cls) {
+    private List<Method> getMethod(Class<?> cls) {
+        List<Method> methodList = new ArrayList<>();
         Method[] methods = cls.getDeclaredMethods();
         if (methods == null || methods.length <= 0) {
-            return null;
+            return methodList;
         }
         for (Method method : methods) {
             Test a = method.getAnnotation(Test.class);
             if (a != null && a.enable()) {
                 method.setAccessible(true);
-                return method;
+                methodList.add(method);
             }
         }
-        return null;
+        return methodList;
     }
 }

@@ -1,6 +1,5 @@
 package testCase;
 
-import t.DoTest;
 import implement.AVLTreeTest;
 import implement.BinarySearchTreeTest;
 import implement.BinaryTreeTest;
@@ -9,6 +8,8 @@ import implement.OneWayTest;
 import implement.QueueTest;
 import implement.RedBlackTreeTest;
 import implement.StackTest;
+import implement.algorithm.SortTest;
+import t.DoTest;
 
 /**
  * @author Caigao.Tang
@@ -20,6 +21,7 @@ public class Main {
     public static void main(String[] args) {
         DoTest test = new DoTest();
         test.initCls(
+                SortTest.class,
                 HeapTest.class,
                 StackTest.class,
                 QueueTest.class,

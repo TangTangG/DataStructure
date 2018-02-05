@@ -3,6 +3,7 @@ package implement.algorithm;
 import sort.BubbleSort;
 import sort.HeapSort;
 import sort.InsertionSort;
+import sort.MergeSort;
 import sort.SelectionSort;
 import sort.ShellSort;
 import t.AnalysisTime;
@@ -19,7 +20,7 @@ public class SortTest {
 
     private static final int TEST_SMALL = 0;
     private static final int TEST_BIG = 1;
-    private static final int TEST_TYPE = TEST_BIG;
+    private static final int TEST_TYPE = TEST_SMALL;
 
     private static final int BIG_ARRAY = 50000;
     private static int[] forTest;
@@ -37,6 +38,12 @@ public class SortTest {
         }
     }
 
+
+    @AnalysisTime
+    @Test(enable = true)
+    private void mergeSort() {
+        printSort(MergeSort.sort(getTestArray()));
+    }
 
     @AnalysisTime
     @Test(enable = true)

@@ -53,7 +53,6 @@ out/production/DataStructure/Stack.class
 .idea/modules.xml
 .idea/misc.xml
 *.xml
-*.iml
 .idea/compiler.xml
 *.xml
 out/artifacts/Test_jar/Test.jar

@@ -24,7 +24,8 @@ Tip:**All implementations do not support thread safety**.
   * [Insertion sort](./Algorithm/src/sort/InsertionSort.java)
   * [Shell sort](./Algorithm/src/sort/ShellSort.java)
   * [Merge sort](./Algorithm/src/sort/MergeSort.java)
-  * [Heap sort]  (./Algorithm/src/sort/HeapSort.java)
+  * [Heap sort](./Algorithm/src/sort/HeapSort.java)
+  
 ## Goals
 >Contains most commonly used data structures and algorithm.<br>
 ## Contact

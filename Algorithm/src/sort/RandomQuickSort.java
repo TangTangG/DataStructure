@@ -25,7 +25,6 @@ public final class RandomQuickSort {
         int pivot = unSort[low + RANDOM.nextInt(high - low + 1)];
         int i = low;
         int j = high;
-//        System.out.println(String.format("pivot:%s i:%s j:%s",pivot,i,j));
         int temp;
         while (i < j) {
             while (unSort[i] < pivot) {

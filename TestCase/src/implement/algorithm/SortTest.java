@@ -1,9 +1,12 @@
 package implement.algorithm;
 
 import sort.BubbleSort;
+import sort.CountingSort;
 import sort.HeapSort;
 import sort.InsertionSort;
 import sort.MergeSort;
+import sort.QuickSort;
+import sort.RandomQuickSort;
 import sort.SelectionSort;
 import sort.ShellSort;
 import t.AnalysisTime;
@@ -38,6 +41,23 @@ public class SortTest {
         }
     }
 
+    @AnalysisTime
+    @Test(enable = true)
+    private void countingSort() {
+        printSort(CountingSort.sort(getTestArray()));
+    }
+
+    @AnalysisTime
+    @Test(enable = true)
+    private void randomQuickSort() {
+        printSort(RandomQuickSort.sort(getTestArray()));
+    }
+
+    @AnalysisTime
+    @Test(enable = true)
+    private void quickSort() {
+        printSort(QuickSort.sort(getTestArray()));
+    }
 
     @AnalysisTime
     @Test(enable = true)
@@ -55,7 +75,6 @@ public class SortTest {
     @Test(enable = true)
     private void bubbleSort() {
         printSort(BubbleSort.sort(getTestArray()));
-
     }
 
     @AnalysisTime

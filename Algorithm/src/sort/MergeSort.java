@@ -8,6 +8,9 @@ package sort;
  *  2.Repeatedly merge sublists to produce new sorted sublists
  *  until there is only 1 sublist remaining. This will be the sorted list.
  *
+ * The merge process, if represented from top to bottom,
+ * is like an inverted complete binary tree.
+ *
  * O(N * logN)
  *
  * @author Caigao.Tang

@@ -1,7 +1,9 @@
 # DataStructure
 Data structures & Algorithm implemented in **Java**.<br>
 You can use this project to build a simple data structure implement in your Java project.<br>
-Tip:**All implementations do not support thread safety**.
+Tip:**All implementations do not support thread safety**.<br>
+<br>
+Other languages:[中文](README_zh-cn.md)
 ## Achieved the following data structure
 ### Stack
   * [(Array)Stack](./src/stack/Stack.java)
@@ -34,3 +36,4 @@ Tip:**All implementations do not support thread safety**.
 >Contains most commonly used data structures and algorithm.<br>
 ## Contact
 Mail:gutanggu@gmail.com
+Blog:www.areahash.com

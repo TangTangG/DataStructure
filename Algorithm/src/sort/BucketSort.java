@@ -1,13 +1,10 @@
 package sort;
 
 /**
- * Counting sort.
- *
  * @author Caigao.Tang
- * @date 2018/1/26
- * @see "https://en.wikipedia.org/wiki/Counting_sort"
+ * @date 2018/2/7
  */
-public final class CountingSort {
+public final class BucketSort {
 
     public static int[] sort(int[] unSort) {
         if (unSort == null || unSort.length <= 1) {
@@ -22,8 +19,8 @@ public final class CountingSort {
                 min = i;
             }
         }
-        int l = unSort.length;
         int countL = ((max - min) & 0x7FFFFFFF) + 1;
+        //over flow
         if (countL < 0) {
             throw new IndexOutOfBoundsException();
         }
@@ -34,17 +31,15 @@ public final class CountingSort {
         for (int i : unSort) {
             c[i - min]++;
         }
-        //In fact, the array here has been ordered,
-        //you can directly traverse the array C to get the final result.
-        //_______see bucket sort.
+        int index = 0;
         //Get the element index in sorted array.
-        for (int i = 1; i < countL; i++) {
-            c[i] += c[i - 1];
+        for (int i = 0; i < countL; i++) {
+            int size = c[i];
+            for (int j = 0; j < size; j++) {
+                unSort[index++] = i + min;
+            }
         }
-        int[] result = new int[l];
-        for (int i : unSort) {
-            result[--c[i - min]] = i;
-        }
-        return result;
+        return unSort;
     }
+
 }

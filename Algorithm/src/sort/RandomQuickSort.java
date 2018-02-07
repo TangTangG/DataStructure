@@ -26,23 +26,25 @@ public final class RandomQuickSort {
         int i = low;
         int j = high;
         int temp;
-        while (i < j) {
+        while (i <= j) {
             while (unSort[i] < pivot) {
                 i++;
             }
             while (unSort[j] > pivot) {
                 j--;
             }
-            if (i < j) {
+            if (i <= j) {
                 temp = unSort[i];
                 unSort[i] = unSort[j];
                 unSort[j] = temp;
+                i++;
+                j--;
             }
         }
-        if (--j >= low) {
+        if (j > low) {
             quickSort(unSort, low, j);
         }
-        if (++i <= high) {
+        if (i < high) {
             quickSort(unSort, i, high);
         }
     }

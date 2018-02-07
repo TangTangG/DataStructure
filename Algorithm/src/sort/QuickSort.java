@@ -33,7 +33,7 @@ public final class QuickSort {
         int i = low;
         int j = high;
         int temp;
-        while (i < j) {
+        while (i <= j) {
             //This code can make less exchange.
             //Because it make exchange gap become (j - i).
             //So if the array already ordered(but reverse),
@@ -44,20 +44,20 @@ public final class QuickSort {
             while (unSort[j] > pivot) {
                 j--;
             }
-            if (i < j) {
+            if (i <= j) {
                 temp = unSort[i];
                 unSort[i] = unSort[j];
                 unSort[j] = temp;
+                i++;
+                j--;
             }
         }
         //Check if the array head or tail is coming.
-        if (--j >= low) {
+        if (j > low) {
             quickSort(unSort, low, j);
         }
-        if (++i <= high) {
+        if (i < high) {
             quickSort(unSort, i, high);
         }
     }
-
-
 }
